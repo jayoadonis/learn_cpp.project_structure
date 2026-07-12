@@ -1,0 +1,17 @@
+module learn_cpp.the_library_module;
+
+namespace learn_cpp::the_library_module::pkg_name {
+  
+  template<typename T>
+  ClassB<T>::ClassB(T const x) {
+    this->x = x;
+  }
+
+  template<typename T>
+  ClassB<T>::~ClassB() = default;
+
+  template<typename T>
+  T ClassB<T>::get_x() {
+    return this->x;
+  }
+}
