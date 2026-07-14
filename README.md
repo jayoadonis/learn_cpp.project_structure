@@ -52,10 +52,12 @@ cmake -S . -B build[/<generator_name>[_<arch>]] -G "<multi_config_generator_name
 cmake --build build[/<generator_name>[_<arch>]] [--config (debug|release)] [--clean-first]
 
 #REM: Test
-ctest --test-dir build[/<generator_name>[_<arch>]] [-R "match test name"] [-L "match test label name"] [-VV] [-C (debug|release)] 
+ctest --test-dir build[/<generator_name>[_<arch>]][/<project_name>] [-R "match test name"] [-L "match test label name"] [-VV] [-C (debug|release)] 
 
 #REM: Install, usually by default config is 'release'
 cmake --install build[/<generator_name>[_<arch>]] [--prefix <path/to/install>] [--config (debug|release)] 
+
+#REM: Note, at config phase we can add `-DBUILD_TESTING=(ON|OFF)`
 ```
 
 
