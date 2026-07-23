@@ -88,21 +88,21 @@ install(
 #REM: ===== Package config files (generated in binary tree) =====
 include(CMakePackageConfigHelpers)
 
-file(MAKE_DIRECTORY ${learn_cpp.project_structure.the_library.CMAKE_GENERATE_DIR})
+file(MAKE_DIRECTORY ${learn_cpp.project_structure.the_library.CMAKE_GENERATED_DIR})
 
 write_basic_package_version_file(
-  ${learn_cpp.project_structure.the_library.CMAKE_GENERATE_DIR}/${PROJECT_NAME}-config-version.cmake
+  ${learn_cpp.project_structure.the_library.CMAKE_GENERATED_DIR}/${PROJECT_NAME}-config-version.cmake
   VERSION ${PROJECT_VERSION}
   COMPATIBILITY SameMajorVersion)
 
 file(WRITE
-  ${learn_cpp.project_structure.the_library.CMAKE_GENERATE_DIR}/${PROJECT_NAME}-config.cmake
+  ${learn_cpp.project_structure.the_library.CMAKE_GENERATED_DIR}/${PROJECT_NAME}-config.cmake
   "include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake\")\n")
 
 install(
   FILES
-    ${learn_cpp.project_structure.the_library.CMAKE_GENERATE_DIR}/${PROJECT_NAME}-config.cmake
-    ${learn_cpp.project_structure.the_library.CMAKE_GENERATE_DIR}/${PROJECT_NAME}-config-version.cmake
+    ${learn_cpp.project_structure.the_library.CMAKE_GENERATED_DIR}/${PROJECT_NAME}-config.cmake
+    ${learn_cpp.project_structure.the_library.CMAKE_GENERATED_DIR}/${PROJECT_NAME}-config-version.cmake
   DESTINATION 
     ${learn_cpp.project_structure.the_library.INSTALL_INFIX_DIR}/lib/cmake/${PROJECT_NAME}
   COMPONENT library)

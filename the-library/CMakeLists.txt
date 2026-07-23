@@ -24,7 +24,7 @@ set(learn_cpp.project_structure.the_library.INSTALL_DIR
   "${CMAKE_SOURCE_DIR}/install" 
   CACHE PATH "INSTALL_PREFIX_PATH" FORCE)
 
-set(learn_cpp.project_structure.the_library.CMAKE_GENERATE_DIR
+set(learn_cpp.project_structure.the_library.CMAKE_GENERATED_DIR
   ${PROJECT_SOURCE_DIR}/cmake/.generate/learn_cpp.project_structure.the_library)
 
 add_subdirectory("src/main/cpp")
