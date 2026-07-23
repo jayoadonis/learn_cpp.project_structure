@@ -76,7 +76,7 @@ install(
   DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/public/
   DESTINATION ${learn_cpp.project_structure.the_library.INSTALL_INFIX_DIR}/include
   COMPONENT library
-  FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
+  FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.tpp")
 
 install(
   EXPORT ${PROJECT_NAME}-targets
