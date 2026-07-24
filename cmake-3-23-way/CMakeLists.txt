@@ -13,6 +13,15 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type" FORCE)
 endif()
 
+option(CMAKE_3_23_WAY_TOGGLE_SHARED 
+  "Build shared libraries" OFF) 
+
+if(CMAKE_3_23_WAY_TOGGLE_SHARED)
+  set(CMAKE_3_23_WAY_LIB_TYPE SHARED)
+else()
+  set(CMAKE_3_23_WAY_LIB_TYPE STATIC)
+endif()
+
 include(CTest)
 
 add_subdirectory(src/main/cpp)

@@ -20,21 +20,45 @@ file(GLOB_RECURSE
   ${CMAKE_CURRENT_SOURCE_DIR}/public/*.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/public/*.tpp)
 
-add_library(${PROJECT_NAME}_target_main_static STATIC)
+# add_library(${PROJECT_NAME}_target_main_static STATIC)
+add_library(${PROJECT_NAME}_target_main_lib
+  ${CMAKE_3_23_WAY_LIB_TYPE})
 
-add_library(learn_cpp.project_structure::${PROJECT_NAME}_target_main_static
-  ALIAS ${PROJECT_NAME}_target_main_static)
+add_library(learn_cpp.project_structure::${PROJECT_NAME}_target_main_lib
+  ALIAS ${PROJECT_NAME}_target_main_lib)
 
-set_target_properties(${PROJECT_NAME}_target_main_static
+set_target_properties(${PROJECT_NAME}_target_main_lib
   PROPERTIES
-  OUTPUT_NAME cmake-3.23-way)
+  OUTPUT_NAME cmake-3.23-way
+  #REM: Tell CMake to hide all symbols by default
+  CXX_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON)
+
+include(GenerateExportHeader)
+generate_export_header(${PROJECT_NAME}_target_main_lib
+  BASE_NAME CMAKE_3_23_WAY
+  EXPORT_FILE_NAME 
+    ${CMAKE_CURRENT_BINARY_DIR}/.generate/include/cmake_3_23_way_export.h
+  EXPORT_MACRO_NAME CMAKE_3_23_WAY_API
+  DEPRECATED_MACRO_NAME CMAKE_3_23_WAY_DEPRECATED)
+
+#REM: *_STATIC_DEFINE
+#REM: *_EXPORT
+#REM: *_NO_EXPORT
+#REM: *_DEPRECATED
+#REM: *_DEPRECATED_EXPORT
+#REM: *_NO_DEPRECATED
+if(NOT CMAKE_3_23_WAY_TOGGLE_SHARED)
+  target_compile_definitions(${PROJECT_NAME}_target_main_lib
+    PRIVATE CMAKE_3_23_WAY_STATIC_DEFINE)
+endif()
 
 if(NOT MSVC)
   #REM: ----------------------------------------------------------
   #REM: GCC / CLANG (MSYS64 UCRT64 toolchain)
   #REM: ----------------------------------------------------------
   target_compile_options(
-    ${PROJECT_NAME}_target_main_static
+    ${PROJECT_NAME}_target_main_lib
     PRIVATE
     -pedantic-errors    #REM: Reject non-standard C++ extensions (Enforce ISO rules)
     -Wall               #REM: Enable almost all standard compiler warnings
@@ -47,7 +71,7 @@ else()
   #REM: ------------------------------------------------------------
   #REM: MICROSOFT VISUAL C++ (MSVC toolchain)
   #REM: ------------------------------------------------------------
-  target_compile_options(${PROJECT_NAME}_target_main_static
+  target_compile_options(${PROJECT_NAME}_target_main_lib
     PRIVATE
     /permissive-        #REM: Force strict C++ standard compliance (disable MSVC loopholes)
     /W4                 #REM: Enable production-ready Warning Level 4 (highly recommended)
@@ -58,8 +82,7 @@ else()
   )
 endif()
 
-
-target_sources(${PROJECT_NAME}_target_main_static
+target_sources(${PROJECT_NAME}_target_main_lib
   PRIVATE
     ${learn_cpp.project_structure.cmake_3_23_way.CMAKE_PRIVATE_CXX_MAIN_SOURCES}
   
@@ -73,15 +96,18 @@ target_sources(${PROJECT_NAME}_target_main_static
       
   PUBLIC FILE_SET public_header_main_sources
     TYPE HEADERS
-    BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/public
+    BASE_DIRS 
+      ${CMAKE_CURRENT_SOURCE_DIR}/public
+      ${CMAKE_CURRENT_BINARY_DIR}/.generate/include
     FILES
       ${learn_cpp.project_structure.cmake_3_23_way.CMAKE_PUBLIC_HEADER_MAIN_SOURCES}
+      ${CMAKE_CURRENT_BINARY_DIR}/.generate/include/cmake_3_23_way_export.h
 )
 
 include(GNUInstallDirs)
 
 install(TARGETS
-  ${PROJECT_NAME}_target_main_static
+  ${PROJECT_NAME}_target_main_lib
   EXPORT ${PROJECT_NAME}_targets
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
