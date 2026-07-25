@@ -28,6 +28,10 @@ target_sources(${PROJECT_NAME}_target_test_app
   # REM: Omitted FILES as intended
 )
 
+#REM: [KEYPOINT] resolve path
+# get_filename_component(LOCAL_INSTALL_DIR 
+#   "${PROJECT_SOURCE_DIR}/../cmake-3-23-way/install" ABSOLUTE)
+
 # list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/install")
 # find_package("cmake-3-23-way" 0.1.0 REQUIRED)
 
@@ -35,12 +39,24 @@ target_link_libraries(${PROJECT_NAME}_target_test_app
   PRIVATE
   learn_cpp.project_structure::cmake-3-23-way_target_main_lib)
 
+# add_custom_command(
+# TARGET
+# ${PROJECT_NAME}_target_test_app POST_BUILD
+# COMMAND ${CMAKE_COMMAND} -E copy_if_different
+# # $<TARGET_FILE:learn_cpp.project_structure::cmake-3-23-way_target_main_lib>
+# $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}_target_test_app>
+# $<TARGET_FILE_DIR:${PROJECT_NAME}_target_test_app>
+# COMMAND_EXPAND_LISTS
+# VERBATIM)
 add_custom_command(
-  TARGET 
-  ${PROJECT_NAME}_target_test_app POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
-  $<TARGET_FILE:learn_cpp.project_structure::cmake-3-23-way_target_main_lib>
-  $<TARGET_FILE_DIR:${PROJECT_NAME}_target_test_app>)
+  TARGET ${PROJECT_NAME}_target_test_app POST_BUILD
+  COMMAND ${CMAKE_COMMAND}
+  -D "SRC_DLLS=$<TARGET_RUNTIME_DLLS:${PROJECT_NAME}_target_test_app>"
+  -D "DEST_DIR=$<TARGET_FILE_DIR:${PROJECT_NAME}_target_test_app>"
+  -P ${PROJECT_SOURCE_DIR}/cmake/copy_runtime_dlls.cmake
+  COMMAND_EXPAND_LISTS
+  VERBATIM
+)
 
 add_test(NAME ${PROJECT_NAME}_unit_test
   COMMAND ${PROJECT_NAME}_target_test_app unit)

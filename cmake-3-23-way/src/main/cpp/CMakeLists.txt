@@ -122,15 +122,15 @@ install(EXPORT ${PROJECT_NAME}_targets
 include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
-  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/.generate/${PROJECT_NAME}-config-version.cmake
   VERSION ${PROJECT_VERSION} #REM: Uses the version defined in your project() call
   COMPATIBILITY SameMajorVersion #REM: Options: AnyNewerVersion, SameMajorVersion, ExactVersion
 )
 
-file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/.generate/${PROJECT_NAME}-config.cmake
   "include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake\")\n")
 
 install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
-  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/.generate/${PROJECT_NAME}-config.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/.generate/${PROJECT_NAME}-config-version.cmake
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
