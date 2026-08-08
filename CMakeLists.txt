@@ -7,6 +7,7 @@ add_subdirectory("the-library")
 add_subdirectory("the-application")
 add_subdirectory("the-library-module")
 add_subdirectory("the-application-module")
+add_subdirectory("cmake-3-23-way")
 
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
