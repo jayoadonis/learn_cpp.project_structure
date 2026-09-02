@@ -65,3 +65,26 @@ configure_file(
 set(CPACK_PROJECT_CONFIG_FILE "${CMAKE_CURRENT_BINARY_DIR}/cpack-options.cmake")
 set(CPACK_GENERATOR "ZIP;TGZ")
 include(CPack)
+
+add_custom_target(check-info
+  COMMAND ${CMAKE_COMMAND} -E echo "---------------------------------------"
+  COMMAND ${CMAKE_COMMAND} -E echo "PROJECT INFORMATION:"
+  COMMAND ${CMAKE_COMMAND} -E echo "  Project Vendor:    ${project.GROUP}"
+  COMMAND ${CMAKE_COMMAND} -E echo "  Project Name:      ${project.NAME}"
+  COMMAND ${CMAKE_COMMAND} -E echo "  Project Version:   ${project.VERSION}"
+  COMMAND ${CMAKE_COMMAND} -E echo "---------------------------------------"
+  COMMAND ${CMAKE_COMMAND} -E echo "BUILD ENVIRONMENT:"
+  COMMAND ${CMAKE_COMMAND} -E echo "  CMake Generator:   ${CMAKE_GENERATOR}"
+  COMMAND ${CMAKE_COMMAND} -E echo "  CMake Version:     ${CMAKE_VERSION}"
+  COMMAND ${CMAKE_COMMAND} -E echo "  Build Type:        $<CONFIG>"
+  COMMAND ${CMAKE_COMMAND} -E echo "---------------------------------------"
+  COMMAND ${CMAKE_COMMAND} -E echo "COMPILER INFORMATION:"
+  COMMAND ${CMAKE_COMMAND} -E echo "  C++ Compiler ID:   ${CMAKE_CXX_COMPILER_ID}"
+  COMMAND ${CMAKE_COMMAND} -E echo "  Compiler Version:  ${CMAKE_CXX_COMPILER_VERSION}"
+  COMMAND ${CMAKE_COMMAND} -E echo "---------------------------------------"
+  COMMAND ${CMAKE_COMMAND} -E echo "SYSTEM INFORMATION:"
+  COMMAND ${CMAKE_COMMAND} -E echo "  System Name:       ${CMAKE_SYSTEM_NAME}"
+  COMMAND ${CMAKE_COMMAND} -E echo "  System Processor:  ${CMAKE_SYSTEM_PROCESSOR}"
+  COMMAND ${CMAKE_COMMAND} -E echo "---------------------------------------"
+  VERBATIM
+  COMMENT "Retrieving project and system diagnostics...")
