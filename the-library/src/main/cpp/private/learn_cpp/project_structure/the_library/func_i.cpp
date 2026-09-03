@@ -5,6 +5,6 @@
 namespace learn_cpp::project_structure::the_library {
 
   void func_i(float x) {
-    std::printf("::: %s, %.2f\n", "Hi there", x);
+    std::printf("::: %s: %.2f. %s\n", "Hi there", x, "From the-library");
   }
 }

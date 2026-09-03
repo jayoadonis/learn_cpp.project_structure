@@ -13,6 +13,15 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type" FORCE)
 endif()
 
+#REM: Appending staging installation precompiled deps
+list(APPEND CMAKE_PREFIX_PATH
+  "${PROJECT_SOURCE_DIR}/install"
+  "${PROJECT_SOURCE_DIR}/out/install"
+  "${PROJECT_SOURCE_DIR}/../install"
+  "${PROJECT_SOURCE_DIR}/../out/install"
+  # "${PROJECT_SOURCE_DIR}/../the-library/out/install"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../the-library/out/install")
+
 set(learn_cpp.project_structure.the_application.OUTPUT_NAME
   $<LOWER_CASE:${PROJECT_NAME}-${PROJECT_VERSION}-$<CONFIG>-$<PLATFORM_ID>>)
 

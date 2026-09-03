@@ -1,4 +1,5 @@
 include(GNUInstallDirs)
+include(CmakePackageConfigHelpers)
 
 file(GLOB_RECURSE
   project.PRIVATE_CXX_MAIN_SOURCES
@@ -97,5 +98,21 @@ install(EXPORT
   "${project.NAME}_targets"
   NAMESPACE "${project.GROUP}::"
   FILE "${project.TARGET_MAIN_NAME}-targets.cmake"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${project.TARGET_MAIN_NAME}"
+  COMPONENT "${project.NAME}_install_component")
+
+file(WRITE
+  "${CMAKE_CURRENT_BINARY_DIR}/${project.TARGET_MAIN_NAME}-config.cmake"
+  "include(\"\${CMAKE_CURRENT_LIST_DIR}/${project.TARGET_MAIN_NAME}-targets.cmake\")")
+
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/${project.TARGET_MAIN_NAME}-config-version.cmake"
+  VERSION ${PROJECT_VERSION}
+  COMPATIBILITY SameMajorVersion)
+
+install(
+  FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/${project.TARGET_MAIN_NAME}-config.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/${project.TARGET_MAIN_NAME}-config-version.cmake"
   DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${project.TARGET_MAIN_NAME}"
   COMPONENT "${project.NAME}_install_component")

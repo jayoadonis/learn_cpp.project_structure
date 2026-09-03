@@ -21,5 +21,8 @@ compile_commands.json
 .log/
 .log
 
+#REM: [TODO] May break toolchain, build tools and so on.
+/application/
+
 !.keep
 
